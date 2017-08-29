@@ -12,7 +12,9 @@ if (empty($_REQUEST['command']) || !method_exists($broker, $_REQUEST['command'])
 }
 
 try {
-    $result = $broker->{$_REQUEST['command']}();
+    $user = (isset($_REQUEST['username']) ? $_REQUEST['username']:NULL);
+    $pass = (isset($_REQUEST['password']) ? $_REQUEST['password']:NULL);
+    $result = $broker->{$_REQUEST['command']}($user,$pass);
 } catch (Exception $e) {
     $status = $e->getCode() ?: 500;
     $result = ['error' => $e->getMessage()];
